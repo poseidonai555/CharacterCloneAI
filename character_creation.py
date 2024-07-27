@@ -25,13 +25,15 @@ def character_input():#edit this after (is_fictional_character)
             """
             GPT3 is_fictional_character
             """
+            '''
             if is_fictional_character() != True:
                     messagebox.showerror("Error", "must be a fictional character")
             else:
-                characters.append(character)
-                save_history()
-                character_json_file()
-                os.makedirs(r'character_data/character_history/'+character)
+            '''
+            characters.append(character)
+            save_history()
+            character_json_file()
+            os.makedirs(r'character_data/character_history/'+character)
     #GUI
     clear_window()
     entry = ttk.Entry(window)
@@ -71,11 +73,11 @@ def save_history():
     submit_butn = ttk.Button(window, text = "submit history file name", command = submit_button)
     submit_butn.pack()
 def character_json_file():#create pygmalion .json file
-    personality = personality_character()
-    looks = looks_character()
-    senario = senario_character()
-    example_messages = example_messages_character()
-    summary = summary_character()
+    personality = "personality" #personality_character()
+    looks = "looks" #looks_character()
+    senario = "scenario" #senario_character()
+    example_messages = "example messages" #example_messages_character()
+    summary = "summary" #summary_character()
 
     character_data = {
         "char name": character,
@@ -88,8 +90,7 @@ def character_json_file():#create pygmalion .json file
         "scenario": senario,
     }
 
-    with open((r'/Users/name_of_user/text-generation-webui/characters/'+character+'.json'), 'w') as outfile:
-        json.dump(character_data, outfile)
+    save_history()
 
 def file_name_list():
     with open((r'character_data/character_history/'+character_menu_choice+"/"+character_menu_choice+'_file_names.txt'), 'r') as file:
