@@ -81,14 +81,17 @@ def character_json_file():#create pygmalion .json file
 
     character_data = {
         "char name": character,
-        "char_persona": personality+" "+looks,
-        "world_scenario": senario,
-        "exaple_dialogue": example_messages,
+        "char_persona": personality_character()+" "+looks_character(),
+        "world_scenario": senario_character(),
+        "exaple_dialogue": example_messages_character(),
         "name": character,
-        "description": personality,
-        "personality": summary,
-        "scenario": senario,
+        "description": personality_character(),
+        "personality": summary_character(),
+        "scenario": senario_character(),
     }
+    
+    with open((r'/home/poseidon/text-generation-webui/characters/'+character+".json"), 'w') as file:
+        json.dump(character_data, file)
 
     save_history()
 
@@ -252,11 +255,6 @@ def message_character():
 read_characters_file()
 #character's pygmalion history must be defined here
 character_history = "testing 123"
-#preset data for testing .json persona file building
-character_looks = "looks"
-character_personality = "personality"
-
-character_context = "context"
 
 while True:
     #if list is empty
@@ -306,7 +304,7 @@ while True:
                 character_menu_choice = a
                 #GUI for options with choosen character
                 clear_window()
-                def load_chat_history_with():
+                def load_chat_history_with(): #Make sure appended chat history is on a new line
                     file_name_list()
                     if len(file_names) == 0:
                         messagebox.showerror("Error", "No histories to load from")
@@ -405,7 +403,7 @@ while True:
             if len(characters) == 1:
                 confirm = messagebox.askquestion(message="Are you sure you want to delete "+characters[0], type=messagebox.YESNO)
                 if confirm == "yes":
-                    os.remove((r'/Users/name_of_user/text-generation-webui/characters/'+characters[0]+'.json'))
+                    os.remove((r'/home/poseidon/text-generation-webui/characters/'+characters[0]+'.json'))
                     shutil.rmtree(('character_data/character_history/'+characters[0]))
                     messagebox.showinfo(message= characters[0]+" deleted")
                     del characters[characters.index(characters[0])]
@@ -422,7 +420,7 @@ while True:
                         confirm = messagebox.askquestion(message="Are you sure you want to delete "+character_menu_choice+"?", type=messagebox.YESNO)
                         if confirm == "yes":
                             del characters[characters.index(character_menu_choice)]
-                            os.remove((r'/Users/name_of_user/text-generation-webui/characters/'+character_menu_choice+'.json'))
+                            os.remove((r'/home/poseidon/text-generation-webui/characters/'+character_menu_choice+'.json'))
                             shutil.rmtree(('character_data/character_history/'+character_menu_choice))
                             messagebox.showinfo(message= character_menu_choice+" deleted")
                             window.destroy()
