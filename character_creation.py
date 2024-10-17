@@ -6,6 +6,8 @@ from tkinter import ttk
 from tkinter import Frame
 from tkinter import messagebox
 import requests
+import yaml
+
 
 #General functions
 def character_input():#edit this after (is_fictional_character)
@@ -62,7 +64,7 @@ def save_history():
             with open((r'character_data/character_history/'+character+"/"+file_name+'_history.json'), 'w') as file: #creates the history file
                 dictionary = {}
                 dictionary["data"] = character_history
-                json.dump(dictionary, file) #adds data to history file
+                yaml.dump(dictionary, file) #adds data to history file
             with open((r'character_data/character_history/'+character+"/"+character+'_file_names.txt'), 'w') as file:
                 file.write(file_name)
             window.destroy()
@@ -72,7 +74,7 @@ def save_history():
     entry.bind("<Return>", lambda event: submit_button())
     submit_butn = ttk.Button(window, text = "submit history file name", command = submit_button)
     submit_butn.pack()
-def character_json_file():#create pygmalion .json file
+def character_json_file():#create pygmalion .yaml file, add a greeting toggle/
     personality = "personality" #personality_character()
     looks = "looks" #looks_character()
     senario = "scenario" #senario_character()
@@ -80,18 +82,12 @@ def character_json_file():#create pygmalion .json file
     summary = "summary" #summary_character()
 
     character_data = {
-        "char name": character,
-        "char_persona": personality_character()+" "+looks_character(),
-        "world_scenario": senario_character(),
-        "exaple_dialogue": example_messages_character(),
         "name": character,
-        "description": personality_character(),
-        "personality": summary_character(),
-        "scenario": senario_character(),
+        "context:": summary_character()+" "+personality_character()+" "+looks_character()+" "+'\n'+example_messages_character()
     }
     
-    with open((r'/home/poseidon/text-generation-webui/characters/'+character+".json"), 'w') as file:
-        json.dump(character_data, file)
+    with open((r'/home/poseidon/text-generation-webui/characters/'+character+".yaml"), 'w') as file:
+        yaml.dump(character_data, file)
 
     save_history()
 
@@ -179,22 +175,6 @@ def personality_character():
         "mode": "chat",
         "character": "Assistant",
         "messages": [{"role": "user", "content": ('''write 170 words about the looks of '''+character)}]
-    }
-    response = requests.post(url, headers=headers, json=data, verify=False)
-    assistant_message = response.json()['choices'][0]['message']['content']
-    return str(assistant_message)
-def senario_character():
-        #info for requests module
-    url = "http://127.0.0.1:5000/v1/chat/completions"
-
-    headers = {
-        "Content-Type": "application/json"
-    }
-
-    data = {
-        "mode": "chat",
-        "character": "Assistant",
-        "messages": [{"role": "user", "content": ('''write 100 words about a fictional senario where a person would meet '''+character)}]
     }
     response = requests.post(url, headers=headers, json=data, verify=False)
     assistant_message = response.json()['choices'][0]['message']['content']
@@ -319,7 +299,7 @@ while True:
                                 file_data = json.load(file)
                             file_data["data"] = file_data["data"] + " " + character_history
                             with open((r'character_data/character_history/'+character_menu_choice+"/"+histories_menu_choice+'_history.json'), 'w') as file:
-                                json.dump(file_data, file)
+                                3(file_data, file)
                             window.destroy()
                         for b in file_names:
                             button = ttk.Button(window, text = b, command=lambda b=b:choice(b))
@@ -376,7 +356,7 @@ while True:
                             with open((r'character_data/character_history/'+character_menu_choice+"/"+history_save_name+'_history.json'), 'w') as file: #creates the history file
                                 dictionary = {}
                                 dictionary["data"] = character_history
-                                json.dump(dictionary, file) #adds data to history file
+                                yaml.dump(dictionary, file) #adds data to history file
                             file_names.append(history_save_name)
                             write_histories()
                             window.destroy()
