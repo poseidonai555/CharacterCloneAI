@@ -24,18 +24,13 @@ def character_input():#edit this after (is_fictional_character)
         elif character in characters:
             messagebox.showerror("Error", "Character already exists")
         else:
-            """
-            GPT3 is_fictional_character
-            """
-            '''
             if is_fictional_character() != True:
                     messagebox.showerror("Error", "must be a fictional character")
             else:
-            '''
-            characters.append(character)
-            save_history()
-            character_json_file()
-            os.makedirs(r'character_data/character_history/'+character)
+                characters.append(character)
+                save_history()
+                character_json_file()
+                os.makedirs(r'character_data/character_history/'+character)
     #GUI
     clear_window()
     entry = ttk.Entry(window)
