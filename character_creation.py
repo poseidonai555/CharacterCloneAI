@@ -383,7 +383,7 @@ while True:
             if len(characters) == 1:
                 confirm = messagebox.askquestion(message="Are you sure you want to delete "+characters[0], type=messagebox.YESNO)
                 if confirm == "yes":
-                    os.remove((r'/home/poseidon/text-generation-webui/characters/'+characters[0]+'.json'))
+                    os.remove((r'/home/poseidon/text-generation-webui/characters/'+characters[0]+'.yaml'))
                     shutil.rmtree(('character_data/character_history/'+characters[0]))
                     messagebox.showinfo(message= characters[0]+" deleted")
                     del characters[characters.index(characters[0])]
