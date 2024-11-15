@@ -395,7 +395,7 @@ while True:
                         confirm = messagebox.askquestion(message="Are you sure you want to delete "+character_menu_choice+"?", type=messagebox.YESNO)
                         if confirm == "yes":
                             del characters[characters.index(character_menu_choice)]
-                            os.remove((r'/home/poseidon/text-generation-webui/characters/'+character_menu_choice+'.json'))
+                            os.remove((r'/home/poseidon/text-generation-webui/characters/'+character_menu_choice+'.yaml'))
                             shutil.rmtree(('character_data/character_history/'+character_menu_choice))
                             messagebox.showinfo(message= character_menu_choice+" deleted")
                             window.destroy()

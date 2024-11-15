@@ -7,7 +7,6 @@ import time
 
 # Procedures
 # def check_if_message():
-    
 
 # button functions
 def user_message(entry):
