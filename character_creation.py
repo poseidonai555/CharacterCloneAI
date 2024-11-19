@@ -10,7 +10,7 @@ import yaml
 
 
 #General functions
-def character_input():#edit this after (is_fictional_character)
+def character_input():
     def submit_button():
         global character
         character = entry.get()
