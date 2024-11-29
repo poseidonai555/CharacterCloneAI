@@ -82,4 +82,7 @@ while True:
 
 while True:
     user_message = input("~> ")
-    print(message(character, user_message))
+    if user_message == "exit":
+        break
+    else:
+        print(message(character, user_message))
