@@ -6,7 +6,7 @@ import requests
 import time
 
 # AI functions
-def message(character, message, message_count, last_message_count):
+def message(character, message):
     url = "http://127.0.0.1:5000/v1/chat/completions"
 
     headers = {
@@ -41,6 +41,7 @@ def clear_window():
 def quit():
     window.destroy()
 
+'''
 window = Tk()
 style = ttk.Style(window)
 style.theme_use("clam")
@@ -54,3 +55,31 @@ user_message = ttk.Entry(window, )
 QUIT_button = ttk.Button(window, text = "Quit program", command=quit)
 QUIT_button.pack()
 window.mainloop()
+'''
+
+def read_characters_file():
+    characters = {}
+    count = 0
+    with open(r'character_names.txt', 'r') as file:
+        for line in file:
+            count +=1
+            characters[count] = line.strip()
+    return characters
+
+characters = read_characters_file()
+
+for key in characters:
+    print(f'{key} {characters[key]}')
+
+while True:
+    char_choice = input("Please enter a number for your character choice: ")
+    try:
+        character = characters[int(char_choice)]
+    except:
+        print("invalid input, must be one of the numbers assigned to the existing characters")
+    else:
+        break    
+
+while True:
+    user_message = input("~> ")
+    print(message(character, user_message))
