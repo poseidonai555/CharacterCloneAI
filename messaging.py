@@ -19,7 +19,7 @@ def message(character, message):
         "messages": [{"role": "user", "content": message}]
     }
     response = requests.post(url, headers=headers, json=data, verify=False)
-    character_response = response.json()['choices'][0]['message']
+    character_response = response.json()
     return character_response
 
 
@@ -71,18 +71,20 @@ characters = read_characters_file()
 for key in characters:
     print(f'{key} {characters[key]}')
 
-while True:
-    char_choice = input("Please enter a number for your character choice: ")
-    try:
-        character = characters[int(char_choice)]
-    except:
-        print("invalid input, must be one of the numbers assigned to the existing characters")
-    else:
-        break    
-
-while True:
-    user_message = input("~> ")
-    if user_message == "exit":
-        break
-    else:
-        print(message(character, user_message))
+if characters:
+    while True:
+        char_choice = input("Please enter a number for your character choice: ")
+        try:
+            character = characters[int(char_choice)]
+        except:
+            print("invalid input, must be one of the numbers assigned to the existing characters")
+        else:
+            break
+    while True:
+        user_message = input("~> ")
+        if user_message == "exit":
+            break
+        else:
+            print(message(character, user_message))   
+else:
+    print("no existing characters") # Remove for when connected with character_creation.py 
