@@ -19,7 +19,7 @@ def message(character, message):
         "messages": [{"role": "user", "content": message}]
     }
     response = requests.post(url, headers=headers, json=data, verify=False)
-    character_response = response.json()
+    character_response = response.json()['choices'][0]['message']
     return character_response
 
 
@@ -82,7 +82,7 @@ if characters:
             break
     while True:
         user_message = input("~> ")
-        if user_message == "exit":
+        if user_message == "exit" or "e":
             break
         else:
             print(message(character, user_message))   
